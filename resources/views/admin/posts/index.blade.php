@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'CRUD Categorías')
+@section('title', 'CRUD Posts')
 
 @section('content_header')
     <h1>
-        Categorías
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-category">
+        Posts
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-post">
             Crear
         </button>
     </h1>
@@ -17,44 +17,44 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Listado de categorías</h3>
+                        <h3 class="card-title">Listado de posts</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="categories" class="table table-bordered table-striped">
+                        <table id="posts" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Categoría</th>
+                                <th>Post</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($categories as $category) {{--Iteramos por cada elemento de la tabla categories que
+                            @foreach($posts as $post) {{--Iteramos por cada elemento de la tabla posts que
                             nos traemos de la base de datos mediante el controlador--}}
                             <tr>
-                                <td>{{$category->id}}</td>
-                                <td>{{$category->name}}</td>
+                                <td>{{$post->id}}</td>
+                                <td>{{$post->name}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-category-{{$category->id}}">
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-post-{{$post->id}}">
                                         Editar
                                     </button>
-                                    <form action="{{route('admin.categories.delete', $category->id)}}" method="POST">
+                                    <form action="{{route('admin.posts.delete', $post->id)}}" method="POST">
                                         {{csrf_field()}}
                                         @method('DELETE')
                                         <button class="btn btn-danger">Eliminar</button>
                                     </form>
                                 </td>
                             </tr>
-                            <!-- modal - UPDATE CATEGORY -->
-                            @include('admin.categories.modal-update-category')
-                            <!-- /.modal - UPDATE CATEGORY -->
+                            <!-- modal - UPDATE POST -->
+                            @include('admin.posts.modal-update-post')
+                            <!-- /.modal - UPDATE POST -->
                             @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Categoría</th>
+                                <th>Post</th>
                                 <th>Acciones</th>
                             </tr>
                             </tfoot>
@@ -70,20 +70,20 @@
     </div>
 
     <!-- modal -->
-    <div class="modal fade" id="modal-create-category">
+    <div class="modal fade" id="modal-create-post">
         <div class="modal-dialog">
             <div class="modal-content bg-default">
                 <div class="modal-header">
-                    <h4 class="modal-title">Crear Categoría</h4>
+                    <h4 class="modal-title">Crear Post</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="{{route('admin.categories.store')}}" method="POST">
+                <form action="{{route('admin.posts.store')}}" method="POST">
                     {{csrf_field()}}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name">Categoría</label>
-                            <input type="text" name="name" class="form-control" id="category">
+                            <label for="name">Post</label>
+                            <input type="text" name="name" class="form-control" id="post">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -102,7 +102,7 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#categories').DataTable( {
+            $('#posts').DataTable( {
                 "order": [[ 3, "desc" ]]
             } );
         } );
