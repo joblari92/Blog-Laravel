@@ -10,8 +10,8 @@
                 {{csrf_field()}}
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Post</label>
-                        <input type="text" name="name" class="form-control" id="post" value="{{$post->name}}">
+                        <label for="title">Post</label>
+                        <input type="text" name="title" class="form-control" id="post" value="{{$post->title}}">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">

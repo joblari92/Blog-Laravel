@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Models\Category;
 use App\Models\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,35 +14,42 @@ class PostsController extends Controller
     }
 
     public function index(){
-        $posts = Post::all(); //Recuperará toda la información de la tabla categories
-        return view('admin.posts.index', ['posts' => $posts]); //Mediante el segundo apartado
- //pasamos toda la información recuperada del la tabla categories a la vista
+        $posts = Post::all(); //Recuperará toda la información de la tabla posts
+        $categories = Category::all(); //Recuperará toda la información de la tabla posts
+        return view('admin.posts.index', [
+            'posts' => $posts,
+            'categories' => $categories
+        ]); //Mediante el segundo apartado
+ //pasamos toda la información recuperada del la tabla posts a la vista
     }
 
-    /*public function store(Request $request){
+    public function store(Request $request){
 
-        $newCategory = new Category(); //Instanciamos el modelo Category
-        $newCategory->name = $request->name; //Asignamos a la columna name de la tabla el valor metido en el formulario
-        $newCategory->save();
+        $newPost = new Post(); //Instanciamos el modelo post
+        $newPost->title = $request->title; //Asignamos a la columna name de la tabla el valor metido en el formulario
+        $newPost->category_id = $request->category_id; //Asignamos a la columna name de la tabla el valor metido en el formulario
+        $newPost->content = $request->contenido; //Asignamos a la columna name de la tabla el valor metido en el formulario
+        $newPost->author = $request->author; //Asignamos a la columna name de la tabla el valor metido en el formulario
+        $newPost->save();
 
         return redirect()->back();
     }
 
-    public function update(Request $request, $categoryId){
+    public function update(Request $request, $postId){
 
-        $category = Category::find($categoryId);//Almacenamos en una variable el ID de la categoría que queremos modificar
+        $post = Post::find($postId);//Almacenamos en una variable el ID de la post que queremos modificar
 
-        $category->name = $request->name; //Sustituimos el name de la category que acabamos de recuperar por el nuevo
+        $post->title = $request->title; //Sustituimos el name de la post que acabamos de recuperar por el nuevo
  //que pasamos a través del formulario
-        $category->save();
+        $post->save();
 
         return redirect()->back();
     }
 
-    public function delete(Request $request, $categoryId){
+    public function delete(Request $request, $postId){
 
-        $category = Category::find($categoryId);//Almacenamos en una variable el ID de la categoría que queremos eliminar
-        $category->delete();
+        $post = Post::find($postId);//Almacenamos en una variable el ID de la post que queremos eliminar
+        $post->delete();
         return redirect()->back();
-    }*/
+    }
 }

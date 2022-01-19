@@ -25,7 +25,8 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Post</th>
+                                <th>Categoría</th>
+                                <th>Título</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -34,7 +35,8 @@
                             nos traemos de la base de datos mediante el controlador--}}
                             <tr>
                                 <td>{{$post->id}}</td>
-                                <td>{{$post->name}}</td>
+                                <td>{{$post->category->name}}</td>
+                                <td>{{$post->title}}</td>
                                 <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-post-{{$post->id}}">
                                         Editar
@@ -54,7 +56,8 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Post</th>
+                                <th>Categoría</th>
+                                <th>Título</th>
                                 <th>Acciones</th>
                             </tr>
                             </tfoot>
@@ -82,8 +85,25 @@
                     {{csrf_field()}}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name">Post</label>
-                            <input type="text" name="name" class="form-control" id="post">
+                            <label for="title">Post</label>
+                            <input type="text" name="title" class="form-control" id="post">
+                        </div>
+                        <div class="form-group">
+                            <label for="category-id">Categoría</label>
+                            <select name="category_id" id="category-id" class="form-control">
+                                <option value="">-- Elegir categoría --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Contenido</label>
+                            <textarea name="contenido" class="form-control" id="content" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Autor</label>
+                            <input type="text" name="author" class="form-control" id="author">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
