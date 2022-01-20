@@ -27,6 +27,7 @@
                                 <th>ID</th>
                                 <th>Categoría</th>
                                 <th>Título</th>
+                                <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -37,6 +38,9 @@
                                 <td>{{$post->id}}</td>
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->title}}</td>
+                                <td>
+                                    <img src="{{asset($post->featured)}}" alt="{{$post->title}}" class="img-fluid img-thumbnail" width="100px">
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-post-{{$post->id}}">
                                         Editar
@@ -58,6 +62,7 @@
                                 <th>ID</th>
                                 <th>Categoría</th>
                                 <th>Título</th>
+                                <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
                             </tfoot>
@@ -84,7 +89,7 @@
                 <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
                     {{--enctype="multipart/form-data se utiliza para poder subir imágenes desde el formulario y se
                     aplica siempre, no solo en Laravel--}}
-                    {{csrf_field()}}
+                    @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="title">Post</label>
@@ -109,7 +114,10 @@
                         </div>
                         <div class="form-group">
                             <label for="featured">Imagen principal</label>
-                            <input type="file" name="featured" class="form-control" id="featured">
+                            <input type="file" name="featured" class="form-control" id="featured" accept="image/*">
+                            @error('featured')
+                                <spam class="text-danger">{{$message}}</spam>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">

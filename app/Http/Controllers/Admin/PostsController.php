@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Models\Category;
 use App\Models\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -26,19 +27,30 @@ class PostsController extends Controller
 
         $newPost = new Post(); //Instanciamos el modelo post
 
-        //dd($request->hasFile('featured'));
+
+
+        //Almacenamos la imagen en una variable
+        //$imagenes = $request->file('featured')->store('public/imagenes'); //Redirigimos la imagen de la carpeta temporal a la carpeta
+        //correspondiente dentro de storage, y con el comando php artisan storage:link, creamos un acceso directo en public a dicha carpeta
+
+        //$url = Storage::url($imagenes); //Almacenamos la url de la imagen
 
         if($request->hasFile('featured')){ //Comprobamos si en el formulario hay imagen cargada
-            $file = $request->file('featured');  //Guardamos la imagen en la variable
-            $destinationPath = 'images/featureds/'; //Definimos la ruta de almacenamiento
-            $fileName = time() . '-' . $file->getClientOriginalName(); //Definimos el nombre concatenando marca de tiempo con nombre original
-            $uploadSuccess = $request->file('featured')->move($destinationPath, $fileName);
-            $newPost->featured = $destinationPath . $fileName;
+            $validated = $request->validate([
+                'featured' => 'image',
+            ]);
+            $imagenes = $request->file('featured')->store('public/imagenes'); //Redirigimos la imagen de la carpeta temporal a la carpeta
+            //correspondiente dentro de storage, y con el comando php artisan storage:link, creamos un acceso directo en public a dicha carpeta
+            $url = Storage::url($imagenes); //Almacenamos la url de la imagen
+            $newPost->featured = $url;
+            //return $url;
+
         }
         $newPost->title = $request->title; //Asignamos a la columna name de la tabla el valor metido en el formulario
         $newPost->category_id = $request->category_id; //Asignamos a la columna name de la tabla el valor metido en el formulario
         $newPost->content = $request->contenido; //Asignamos a la columna name de la tabla el valor metido en el formulario
         $newPost->author = $request->author; //Asignamos a la columna name de la tabla el valor metido en el formulario
+
         $newPost->save();
 
         return redirect()->back();
