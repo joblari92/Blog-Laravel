@@ -62,6 +62,21 @@ class PostsController extends Controller
 
         $post->title = $request->title; //Sustituimos el name de la post que acabamos de recuperar por el nuevo
  //que pasamos a través del formulario
+        $post->category_id = $request->category_id;
+        $post->content = $request->contenido;
+        $post->author = $request->author;
+        if($request->hasFile('featured')){ //Comprobamos si en el formulario hay imagen cargada
+            $validated = $request->validate([
+                'featured' => 'image',
+            ]);
+            $imagenes = $request->file('featured')->store('public/imagenes'); //Redirigimos la imagen de la carpeta temporal a la carpeta
+            //correspondiente dentro de storage, y con el comando php artisan storage:link, creamos un acceso directo en public a dicha carpeta
+            $url = Storage::url($imagenes); //Almacenamos la url de la imagen
+            $post->featured = $url;
+            //return $url;
+        }else{
+            $post->featured = 'NULL';
+        }
         $post->save();
 
         return redirect()->back();
