@@ -31,9 +31,11 @@ class HomeController extends Controller
         return view('posts', ['categories' => $categories, 'posts' => $posts]);
     }
 
-    public function post()
+    public function post($postId)
     {
-        return view('post');
+        $post = Post::find($postId);
+        $latestPosts = Post::orderBy('id','DESC')->take(3)->get();
+        return view('post', ['post' => $post, 'latestPosts' => $latestPosts]);
     }
 
     public function postByCategory($category){
