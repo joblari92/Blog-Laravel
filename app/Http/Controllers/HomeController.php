@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Models\Category;
 
@@ -24,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('posts');
+        $categories = Category::all();
+        $posts = Post::all();
+
+        return view('posts', ['categories' => $categories, 'posts' => $posts]);
     }
 
     public function post()

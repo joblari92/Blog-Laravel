@@ -74,8 +74,6 @@ class PostsController extends Controller
             $url = Storage::url($imagenes); //Almacenamos la url de la imagen
             $post->featured = $url;
             //return $url;
-        }else{
-            $post->featured = 'NULL';
         }
         $post->save();
 

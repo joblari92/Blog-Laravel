@@ -17,7 +17,7 @@
                     <div class="form-group">
                         <label for="category-id">Categoría</label>
                         <select name="category_id" id="category-id" class="form-control">
-                            <option value="">{{$post->category_id}}</option>
+                            <option value="">{{$post->category->name}}</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
@@ -37,6 +37,8 @@
                         @error('featured')
                         <spam class="text-danger">{{$message}}</spam>
                         @enderror
+                        <small>imagen actual</small> <br>
+                        <img src="{{asset($post->featured)}}" alt="{{$post->title}}" class="img-fluid img-thumbnail" width="100px">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
