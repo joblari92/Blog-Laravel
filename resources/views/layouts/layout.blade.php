@@ -12,7 +12,7 @@
 <!-- agrega aquí el header con el logo -->
 <nav class="navbar navbar-light bg-main">
     <div class="container p-4">
-        <a class="navbar-brand m-auto" href="#">
+        <a class="navbar-brand m-auto" href="{{route('home')}}">
             <img src="{{asset('images/logo.png')}}" width="120" alt="" loading="lazy">
         </a>
     </div>

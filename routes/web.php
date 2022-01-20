@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/posts/{categoryId}', [App\Http\Controllers\HomeController::class, 'postByCategory'])->name('post.category');
+Route::get('/posts/{category}', [App\Http\Controllers\HomeController::class, 'postByCategory'])->name('post.category');
 Route::get('/post', [App\Http\Controllers\HomeController::class, 'post'])->name('post');
 
 Route::get('/home', function (){
