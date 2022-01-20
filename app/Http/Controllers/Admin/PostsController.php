@@ -15,17 +15,26 @@ class PostsController extends Controller
 
     public function index(){
         $posts = Post::all(); //Recuperará toda la información de la tabla posts
-        $categories = Category::all(); //Recuperará toda la información de la tabla posts
+        $categories = Category::all(); //Recuperará toda la información de la tabla categories
         return view('admin.posts.index', [
             'posts' => $posts,
             'categories' => $categories
-        ]); //Mediante el segundo apartado
- //pasamos toda la información recuperada del la tabla posts a la vista
+        ]); //Mediante el segundo apartado pasamos toda la información recuperada de la tabla posts a la vista
     }
 
     public function store(Request $request){
 
         $newPost = new Post(); //Instanciamos el modelo post
+
+        //dd($request->hasFile('featured'));
+
+        if($request->hasFile('featured')){ //Comprobamos si en el formulario hay imagen cargada
+            $file = $request->file('featured');  //Guardamos la imagen en la variable
+            $destinationPath = 'images/featureds/'; //Definimos la ruta de almacenamiento
+            $fileName = time() . '-' . $file->getClientOriginalName(); //Definimos el nombre concatenando marca de tiempo con nombre original
+            $uploadSuccess = $request->file('featured')->move($destinationPath, $fileName);
+            $newPost->featured = $destinationPath . $fileName;
+        }
         $newPost->title = $request->title; //Asignamos a la columna name de la tabla el valor metido en el formulario
         $newPost->category_id = $request->category_id; //Asignamos a la columna name de la tabla el valor metido en el formulario
         $newPost->content = $request->contenido; //Asignamos a la columna name de la tabla el valor metido en el formulario

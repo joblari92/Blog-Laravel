@@ -81,7 +81,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="{{route('admin.posts.store')}}" method="POST">
+                <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
+                    {{--enctype="multipart/form-data se utiliza para poder subir imágenes desde el formulario y se
+                    aplica siempre, no solo en Laravel--}}
                     {{csrf_field()}}
                     <div class="modal-body">
                         <div class="form-group">
@@ -104,6 +106,10 @@
                         <div class="form-group">
                             <label for="author">Autor</label>
                             <input type="text" name="author" class="form-control" id="author">
+                        </div>
+                        <div class="form-group">
+                            <label for="featured">Imagen principal</label>
+                            <input type="file" name="featured" class="form-control" id="featured">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
