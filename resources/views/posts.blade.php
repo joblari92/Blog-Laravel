@@ -30,7 +30,7 @@
                                     <h5 class="card-title my-2">{{$post->title}}</h5>
                                     <div class="d-card-text">
                                         <p>
-                                            {{$post->content}}
+                                            {{ Str::limit($post->content, 300) }} {{--Limitamos el número de caracteres a mostrar--}}
                                         </p>
                                     </div>
                                     <a href="{{route('post', $post->id)}}" class="post-link"><b>Leer más</b></a>
